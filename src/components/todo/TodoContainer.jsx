@@ -1,8 +1,15 @@
 import React from 'react'
+import {v4 as uuidv4} from 'uuid'
 import {TodoForm} from "./TodoForm";
 import {TodoList} from "./TodoList";
 
 export const TodoContainer = () => {
+    const [tasks, setTasks] = React.useState([
+        {id:uuidv4(), text:'afsdfsdfsdf', isDone:false, editMode:false},
+        {id:uuidv4(), text:'fasdf', isDone:false, editMode:false},
+        {id:uuidv4(), text:'adff', isDone:false, editMode:false}
+    ]);
+
     return (
         <>
 
@@ -17,7 +24,7 @@ export const TodoContainer = () => {
             </div>
 
             <div style={{marginTop: '25px'}}>
-                <TodoList/>
+                <TodoList data={tasks}/>
             </div>
 
         </>

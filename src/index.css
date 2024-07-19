@@ -23,7 +23,7 @@ body {
     justify-content: space-around;
     position: sticky;
 }
-.form-container .task-input {
+.form-container .task-input, .task-list .task .task-input {
     width: 70%;
     outline: none;
     border: none;

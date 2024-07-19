@@ -1,24 +1,51 @@
 import React from 'react'
 import {IoIosCheckbox} from "react-icons/io";
 import {FaTrashCan} from "react-icons/fa6";
-import {FaEdit} from "react-icons/fa";
+import {FaEdit, FaSave} from "react-icons/fa";
+import {MdCancel} from "react-icons/md";
 
-export const TodoList = () => {
+export const TodoList = ({data}) => {
     return (
         <>
 
             <ul className="task-list">
-                <li className="task">
-                    <span className="task-text">ff</span>
-                    <div className="icon-container">
-                        <IoIosCheckbox className="task-icon"/>
-                        <FaEdit className="task-icon"/>
-                        <FaTrashCan className="task-icon"/>
-                    </div>
-                </li>
+                {data.map(task =>
+                    task.editMode ?
 
+                        <form>
+                            <li className="task">
+                                <input type="text" className="task-input" defaultValue={task.text}/>
+                                <div className="icon-container">
+                                    <button type="submit" style={{background: 'none', border: 'none'}}>
+                                        <FaSave className="task-icon"/>
+                                    </button>
+                                    <button type="button" style={{background: 'none', border: 'none'}}>
+                                        <MdCancel className="task-icon"/>
+                                    </button>
+                                </div>
+
+                            </li>
+                        </form> :
+
+                        <li className="task">
+                            <span className="task-text">{task.text}</span>
+                            <div className="icon-container">
+                                <button type="button" style={{background: 'none', border: 'none'}}>
+                                    <IoIosCheckbox className="task-icon"/>
+                                </button>
+                                <button type="button" style={{background: 'none', border: 'none'}}>
+                                    <FaEdit className="task-icon"/>
+                                </button>
+                                <button type="button" style={{background: 'none', border: 'none'}}>
+                                    <FaTrashCan className="task-icon"/>
+                                </button>
+                            </div>
+                        </li>
+                )
+                }
             </ul>
 
         </>
-    );
+    )
+        ;
 };
