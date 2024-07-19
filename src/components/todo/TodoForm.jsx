@@ -19,9 +19,6 @@ export const TodoForm = ({save}) => {
                     <input type="hidden" {...register('id')}/>
                     <input {...register('taskText', {required: true})} type="text" className="task-input"/>
                     {errors.taskText && <span style={{color: 'red'}}>This field is required</span>}
-                    <button type="button" className="input-icon" style={{background: 'none', border: 'none'}}>
-                        <CiSearch className="input-icon"/>
-                    </button>
                     <button type="submit" className="submit-btn">Add</button>
                 </div>
             </form>
