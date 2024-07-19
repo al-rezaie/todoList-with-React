@@ -20,15 +20,20 @@ export const TodoContainer = () => {
         setSelectedTask(temp[index]);
     }
 
-    const saveTask = (item,mode) => {
+    const saveTask = (item, mode) => {
         if (mode === "edit") {
-            console.log(item)
             const temp = [...tasks];
             const index = temp.findIndex(q => q.id === item.id);
             temp[index].text = item.taskText;
             temp[index].editMode = false;
+            setTasks([...temp])
+        } else {
+            const newTask = {id: uuidv4(), text: item.taskText, isDone: false, editMode: false};
+            setTasks([...tasks, newTask]);
         }
     }
+
+    const removeTask = id => setTasks([...tasks].filter(q => q.id !== id));
 
     return (
         <>
@@ -40,11 +45,12 @@ export const TodoContainer = () => {
             </div>
 
             <div style={{marginTop: '30px'}}>
-                <TodoForm/>
+                <TodoForm save={saveTask}/>
             </div>
 
             <div style={{marginTop: '25px'}}>
-                <TodoList data={tasks} editMode={setEditMode} selectedTask={selectedTask} save={saveTask}/>
+                <TodoList data={tasks} remove={removeTask} editMode={setEditMode} selectedTask={selectedTask}
+                          save={saveTask}/>
             </div>
 
         </>

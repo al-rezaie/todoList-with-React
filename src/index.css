@@ -8,6 +8,9 @@
 body {
     background-color: #d6e3fc;
 }
+button:hover {
+    cursor: pointer;
+}
 
 /*TodoContainer*/
 .container {

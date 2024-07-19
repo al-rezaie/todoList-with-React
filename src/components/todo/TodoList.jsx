@@ -5,19 +5,14 @@ import {FaTrashCan} from "react-icons/fa6";
 import {FaEdit, FaSave} from "react-icons/fa";
 import {MdCancel} from "react-icons/md";
 
-export const TodoList = ({data, editMode, selectedTask,save}) => {
+export const TodoList = ({data, editMode, selectedTask, save, remove}) => {
     const {reset, register, handleSubmit, formState: {errors}} = useForm();
 
-    const submit = data => {
-        if (data.id !== "") {
-            //edit
-            save(data,"edit");
-        }
-    }
+    const submit = data => save(data,'edit');
 
     React.useEffect(() => {
         reset(
-            {id: selectedTask.id, taskText:selectedTask.text}
+            {id: selectedTask.id, taskText: selectedTask.text}
         )
     }, [selectedTask]);
 
@@ -57,7 +52,8 @@ export const TodoList = ({data, editMode, selectedTask,save}) => {
                                         style={{background: 'none', border: 'none'}}>
                                     <FaEdit className="task-icon"/>
                                 </button>
-                                <button type="button" style={{background: 'none', border: 'none'}}>
+                                <button onClick={() => remove(task.id)} type="button"
+                                        style={{background: 'none', border: 'none'}}>
                                     <FaTrashCan className="task-icon"/>
                                 </button>
                             </div>
