@@ -1,10 +1,27 @@
 import React from 'react'
+import {useForm} from 'react-hook-form'
 import {IoIosCheckbox} from "react-icons/io";
 import {FaTrashCan} from "react-icons/fa6";
 import {FaEdit, FaSave} from "react-icons/fa";
 import {MdCancel} from "react-icons/md";
 
-export const TodoList = ({data}) => {
+export const TodoList = ({data, editMode, selectedTask,save}) => {
+    const {reset, register, handleSubmit, formState: {errors}} = useForm();
+
+    const submit = data => {
+        if (data.id !== "") {
+            //edit
+            save(data,"edit");
+        }
+    }
+
+    React.useEffect(() => {
+        reset(
+            {id: selectedTask.id, taskText:selectedTask.text}
+        )
+    }, [selectedTask]);
+
+
     return (
         <>
 
@@ -12,14 +29,17 @@ export const TodoList = ({data}) => {
                 {data.map(task =>
                     task.editMode ?
 
-                        <form>
+                        <form onSubmit={handleSubmit(submit)}>
+                            <input type="hidden" {...register('id')}/>
                             <li className="task">
-                                <input type="text" className="task-input" defaultValue={task.text}/>
+                                <input {...register('taskText', {required: true})} type="text" className="task-input"/>
+                                {errors.taskText && <span style={{color: 'red'}}>this form is required</span>}
                                 <div className="icon-container">
                                     <button type="submit" style={{background: 'none', border: 'none'}}>
                                         <FaSave className="task-icon"/>
                                     </button>
-                                    <button type="button" style={{background: 'none', border: 'none'}}>
+                                    <button onClick={() => editMode(task.id, false)} type="button"
+                                            style={{background: 'none', border: 'none'}}>
                                         <MdCancel className="task-icon"/>
                                     </button>
                                 </div>
@@ -33,7 +53,8 @@ export const TodoList = ({data}) => {
                                 <button type="button" style={{background: 'none', border: 'none'}}>
                                     <IoIosCheckbox className="task-icon"/>
                                 </button>
-                                <button type="button" style={{background: 'none', border: 'none'}}>
+                                <button onClick={() => editMode(task.id)} type="button"
+                                        style={{background: 'none', border: 'none'}}>
                                     <FaEdit className="task-icon"/>
                                 </button>
                                 <button type="button" style={{background: 'none', border: 'none'}}>
