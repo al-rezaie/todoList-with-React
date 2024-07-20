@@ -10,6 +10,13 @@ export const TodoContainer = () => {
         {id: uuidv4(), text: 'adff', isDone: false, editMode: false}
     ]);
 
+    const [completedTasks, setCompletedTasks] = React.useState([
+        {id: uuidv4(), text: 'done', isDone: true},
+        {id: uuidv4(), text: 'done', isDone: true},
+        {id: uuidv4(), text: 'done', isDone: true},
+        {id: uuidv4(), text: 'done', isDone: true}
+    ]);
+
     const [selectedTask, setSelectedTask] = React.useState({});
 
     const setEditMode = (id, mode = true) => {
@@ -50,7 +57,7 @@ export const TodoContainer = () => {
 
             <div style={{marginTop: '25px'}}>
                 <TodoList data={tasks} remove={removeTask} editMode={setEditMode} selectedTask={selectedTask}
-                          save={saveTask}/>
+                          save={saveTask} completedTasks={completedTasks}/>
             </div>
 
         </>

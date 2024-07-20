@@ -1,5 +1,4 @@
 import React from 'react'
-import {CiSearch} from "react-icons/ci";
 import {useForm} from "react-hook-form";
 
 export const TodoForm = ({save}) => {
