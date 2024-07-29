@@ -7,6 +7,7 @@ import {MdCancel} from "react-icons/md";
 
 export const TodoList = ({data, editMode, selectedTask, save, remove, completedTasks}) => {
     const {reset, register, handleSubmit, formState: {errors}} = useForm();
+    const [toggleBtn, setToggleBtn] = React.useState(false);
 
     const submit = data => save(data, 'edit');
 
@@ -16,18 +17,6 @@ export const TodoList = ({data, editMode, selectedTask, save, remove, completedT
         )
     }, [selectedTask]);
 
-    const toggleCompletedTasks = () => {
-        const completedContainer = document.querySelector('.completed-container');
-        const toggleBtn = document.querySelector('.completed-list-toggler');
-
-        if (completedContainer.style.maxHeight) {
-            completedContainer.style.maxHeight = null;
-            toggleBtn.innerHTML = "Show Completed Tasks";
-        } else {
-            completedContainer.style.maxHeight = completedContainer.scrollHeight + 'px'
-            toggleBtn.innerHTML = "Hide Completed Tasks";
-        }
-    }
 
 
     return (
@@ -76,8 +65,8 @@ export const TodoList = ({data, editMode, selectedTask, save, remove, completedT
             </ul>
 
             {/*completed tasks*/}
-            <button onClick={toggleCompletedTasks} className="completed-list-toggler">Show Completed Tasks</button>
-            <div className="completed-container">
+            <button onClick={() => setToggleBtn(!toggleBtn)} className="completed-list-toggler">{toggleBtn ? 'Hide Completed Tasks' : 'Show Completed Tasks'}</button>
+            <div className={toggleBtn ? 'completed-container active' : 'completed-container inactive'}>
                 <ul className="task-list completed-list">
                     {completedTasks.map(task =>
                         <li className="task">
