@@ -1,13 +1,16 @@
 import React from 'react'
 import {v4 as uuidv4} from 'uuid'
+import swal from 'sweetalert';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {TodoForm} from "./TodoForm";
 import {TodoList} from "./TodoList";
 
 export const TodoContainer = () => {
     const [tasks, setTasks] = React.useState([
-        {id: uuidv4(), text: 'afsdfsdfsdf', isDone: false, editMode: false},
-        {id: uuidv4(), text: 'fasdf', isDone: false, editMode: false},
-        {id: uuidv4(), text: 'adff', isDone: false, editMode: false}
+        {id: uuidv4(), text: 'hi', isDone: false, editMode: false},
+        {id: uuidv4(), text: 'hello', isDone: false, editMode: false},
+        {id: uuidv4(), text: 'hey', isDone: false, editMode: false}
     ]);
 
     const [completedTasks, setCompletedTasks] = React.useState([
@@ -40,12 +43,56 @@ export const TodoContainer = () => {
         }
     }
 
-    const removeTask = id => setTasks([...tasks].filter(q => q.id !== id));
-    const removeCompletedTask = id => setCompletedTasks([...completedTasks].filter(q => q.id != id));
+    const removeTask = id => {
+        swal({
+            title: 'Are you sure ?',
+            text: 'Are you sure that you want to delete this task ?',
+            icon: 'warning',
+            dangerMode: true,
+            buttons: ['yes', 'no']
+        })
+            .then(willDelete => {
+                if (!willDelete) {
+                    setTasks([...tasks].filter(q => q.id !== id));
+                    toast.success('Task Deleted Successfully', {
+                        position: 'top-right',
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true
+                    })
+                }
+            })
+    }
+    const removeCompletedTask = id => {
+        swal({
+            title: 'Are you sure ?',
+            text: 'Are you sure that you want to delete this task ?',
+            icon: 'warning',
+            dangerMode: true,
+            buttons: ['yes', 'no']
+        })
+            .then(willDelete => {
+                if (!willDelete) {
+
+                    setCompletedTasks([...completedTasks].filter(q => q.id !== id));
+                    toast.success('Task Deleted Successfully', {
+                        position: 'top-right',
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true
+                    })
+                }
+            })
+    }
 
     return (
         <>
 
+            <ToastContainer />
             <h1>Todo List</h1>
 
             <div style={{margin: '10px 0', opacity: 0.7}}>
@@ -57,7 +104,8 @@ export const TodoContainer = () => {
             </div>
 
             <div style={{marginTop: '25px'}}>
-                <TodoList data={tasks} remove={removeTask} removeCompletedTask={removeCompletedTask} editMode={setEditMode} selectedTask={selectedTask}
+                <TodoList data={tasks} remove={removeTask} removeCompletedTask={removeCompletedTask}
+                          editMode={setEditMode} selectedTask={selectedTask}
                           save={saveTask} completedTasks={completedTasks}/>
             </div>
 
