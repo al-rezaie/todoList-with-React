@@ -5,7 +5,7 @@ import {FaTrashCan} from "react-icons/fa6";
 import {FaEdit, FaSave} from "react-icons/fa";
 import {MdCancel} from "react-icons/md";
 
-export const TodoList = ({data, editMode, selectedTask, save, remove, completedTasks}) => {
+export const TodoList = ({data, editMode, selectedTask, save, remove, completedTasks,removeCompletedTask}) => {
     const {reset, register, handleSubmit, formState: {errors}} = useForm();
     const [toggleBtn, setToggleBtn] = React.useState(false);
 
@@ -75,7 +75,7 @@ export const TodoList = ({data, editMode, selectedTask, save, remove, completedT
                                 <button type="button" style={{background: 'none', border: 'none'}}>
                                     <IoIosCheckbox style={{color:'deepskyblue'}} className="task-icon"/>
                                 </button>
-                                <button onClick={() => remove(task.id)} type="button"
+                                <button onClick={() => removeCompletedTask(task.id)} type="button"
                                         style={{background: 'none', border: 'none'}}>
                                     <FaTrashCan style={{color:'red', opacity:'0.9'}} className="task-icon"/>
                                 </button>

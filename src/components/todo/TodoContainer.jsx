@@ -41,6 +41,7 @@ export const TodoContainer = () => {
     }
 
     const removeTask = id => setTasks([...tasks].filter(q => q.id !== id));
+    const removeCompletedTask = id => setCompletedTasks([...completedTasks].filter(q => q.id != id));
 
     return (
         <>
@@ -56,7 +57,7 @@ export const TodoContainer = () => {
             </div>
 
             <div style={{marginTop: '25px'}}>
-                <TodoList data={tasks} remove={removeTask} editMode={setEditMode} selectedTask={selectedTask}
+                <TodoList data={tasks} remove={removeTask} removeCompletedTask={removeCompletedTask} editMode={setEditMode} selectedTask={selectedTask}
                           save={saveTask} completedTasks={completedTasks}/>
             </div>
 
