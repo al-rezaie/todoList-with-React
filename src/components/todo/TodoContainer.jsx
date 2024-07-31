@@ -1,7 +1,7 @@
 import React from 'react'
 import {v4 as uuidv4} from 'uuid'
 import swal from 'sweetalert';
-import { ToastContainer, toast } from 'react-toastify';
+import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {TodoForm} from "./TodoForm";
 import {TodoList} from "./TodoList";
@@ -89,10 +89,45 @@ export const TodoContainer = () => {
             })
     }
 
+    const setDone = (id,mode) => {
+        if (mode) {
+            //set isDone to false
+            let task = completedTasks.find(q => q.id === id);
+            setCompletedTasks([...tasks].filter(q => q.id !== id));
+            task.editMode = false;
+            task.isDone = false;
+            setTasks([...tasks, task]);
+            toast.success('The operation was successfully done', {
+                position: 'top-right',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true
+            });
+        } else {
+            //set isDone to true
+            let task = tasks.find(q => q.id === id);
+            setTasks([...tasks].filter(q => q.id !== id));
+            delete task.editMode;
+            task.isDone = true;
+            setCompletedTasks([...completedTasks, task]);
+            toast.success('Task Done Successfully', {
+                position: 'top-right',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true
+            });
+
+        }
+    }
+
     return (
         <>
 
-            <ToastContainer />
+            <ToastContainer/>
             <h1>Todo List</h1>
 
             <div style={{margin: '10px 0', opacity: 0.7}}>
@@ -106,7 +141,7 @@ export const TodoContainer = () => {
             <div style={{marginTop: '25px'}}>
                 <TodoList data={tasks} remove={removeTask} removeCompletedTask={removeCompletedTask}
                           editMode={setEditMode} selectedTask={selectedTask}
-                          save={saveTask} completedTasks={completedTasks}/>
+                          save={saveTask} completedTasks={completedTasks} setDone={setDone}/>
             </div>
 
         </>
