@@ -9,14 +9,10 @@ import {TodoList} from "./TodoList";
 export const TodoContainer = () => {
     const [tasks, setTasks] = React.useState([
         {id: uuidv4(), text: 'hi', isDone: false, editMode: false},
-        {id: uuidv4(), text: 'hello', isDone: false, editMode: false},
-        {id: uuidv4(), text: 'hey', isDone: false, editMode: false}
+        {id: uuidv4(), text: 'hello', isDone: false, editMode: false}
     ]);
 
     const [completedTasks, setCompletedTasks] = React.useState([
-        {id: uuidv4(), text: 'done', isDone: true},
-        {id: uuidv4(), text: 'done', isDone: true},
-        {id: uuidv4(), text: 'done', isDone: true},
         {id: uuidv4(), text: 'done', isDone: true}
     ]);
 
@@ -93,7 +89,7 @@ export const TodoContainer = () => {
         if (mode) {
             //set isDone to false
             let task = completedTasks.find(q => q.id === id);
-            setCompletedTasks([...tasks].filter(q => q.id !== id));
+            setCompletedTasks([...completedTasks].filter(q => q.id !== id));
             task.editMode = false;
             task.isDone = false;
             setTasks([...tasks, task]);
