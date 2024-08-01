@@ -55,8 +55,7 @@ export const TodoList = ({
                             </form>
                         </div> :
 
-                        <div key={task.id}>
-                            <li className="task">
+                            <li className="task" key={task.id}>
                                 <span className="task-text">{task.text}</span>
                                 <div className="icon-container">
                                     <button onClick={() => setDone(task.id, false)} type="button"
@@ -73,7 +72,6 @@ export const TodoList = ({
                                     </button>
                                 </div>
                             </li>
-                        </div>
                 )
                 }
             </ul>
