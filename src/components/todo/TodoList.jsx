@@ -34,41 +34,46 @@ export const TodoList = ({
                 {data.map(task =>
                     task.editMode ?
 
-                        <form onSubmit={handleSubmit(submit)}>
-                            <input type="hidden" {...register('id')}/>
+                        <div key={task.id}>
+                            <form onSubmit={handleSubmit(submit)}>
+                                <input type="hidden" {...register('id')}/>
+                                <li className="task">
+                                    <input {...register('taskText', {required: true})} type="text"
+                                           className="task-input"/>
+                                    {errors.taskText && <span style={{color: 'red'}}>this form is required</span>}
+                                    <div className="icon-container">
+                                        <button type="submit" style={{background: 'none', border: 'none'}}>
+                                            <FaSave className="task-icon"/>
+                                        </button>
+                                        <button onClick={() => editMode(task.id, false)} type="button"
+                                                style={{background: 'none', border: 'none'}}>
+                                            <MdCancel className="task-icon"/>
+                                        </button>
+                                    </div>
+
+                                </li>
+                            </form>
+                        </div> :
+
+                        <div key={task.id}>
                             <li className="task">
-                                <input {...register('taskText', {required: true})} type="text"
-                                       className="task-input"/>
-                                {errors.taskText && <span style={{color: 'red'}}>this form is required</span>}
+                                <span className="task-text">{task.text}</span>
                                 <div className="icon-container">
-                                    <button type="submit" style={{background: 'none', border: 'none'}}>
-                                        <FaSave className="task-icon"/>
-                                    </button>
-                                    <button onClick={() => editMode(task.id, false)} type="button"
+                                    <button onClick={() => setDone(task.id, false)} type="button"
                                             style={{background: 'none', border: 'none'}}>
-                                        <MdCancel className="task-icon"/>
+                                        <IoIosCheckbox style={{color: 'deepskyblue'}} className="task-icon"/>
+                                    </button>
+                                    <button onClick={() => editMode(task.id)} type="button"
+                                            style={{background: 'none', border: 'none'}}>
+                                        <FaEdit style={{color: 'orange'}} className="task-icon"/>
+                                    </button>
+                                    <button onClick={() => remove(task.id)} type="button"
+                                            style={{background: 'none', border: 'none'}}>
+                                        <FaTrashCan style={{color: 'red', opacity: '0.9'}} className="task-icon"/>
                                     </button>
                                 </div>
-
                             </li>
-                        </form> :
-
-                        <li className="task">
-                            <span className="task-text">{task.text}</span>
-                            <div className="icon-container">
-                                <button onClick={() => setDone(task.id, false)} type="button" style={{background: 'none', border: 'none'}}>
-                                    <IoIosCheckbox style={{color: 'deepskyblue'}} className="task-icon"/>
-                                </button>
-                                <button onClick={() => editMode(task.id)} type="button"
-                                        style={{background: 'none', border: 'none'}}>
-                                    <FaEdit style={{color: 'orange'}} className="task-icon"/>
-                                </button>
-                                <button onClick={() => remove(task.id)} type="button"
-                                        style={{background: 'none', border: 'none'}}>
-                                    <FaTrashCan style={{color: 'red', opacity: '0.9'}} className="task-icon"/>
-                                </button>
-                            </div>
-                        </li>
+                        </div>
                 )
                 }
             </ul>
@@ -79,10 +84,11 @@ export const TodoList = ({
             <div className={toggleBtn ? 'completed-container active' : 'completed-container inactive'}>
                 <ul className="task-list completed-list">
                     {completedTasks.map(task =>
-                        <li className="task">
+                        <li className="task" key={task.id}>
                             <span className="task-text">{task.text}</span>
                             <div className="icon-container">
-                                <button onClick={() => setDone(task.id, true)} type="button" style={{background: 'none', border: 'none'}}>
+                                <button onClick={() => setDone(task.id, true)} type="button"
+                                        style={{background: 'none', border: 'none'}}>
                                     <IoIosCheckbox style={{color: 'deepskyblue'}} className="task-icon"/>
                                 </button>
                                 <button onClick={() => removeCompletedTask(task.id)} type="button"
