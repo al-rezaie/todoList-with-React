@@ -33,9 +33,25 @@ export const TodoContainer = () => {
             temp[index].text = item.taskText;
             temp[index].editMode = false;
             setTasks([...temp])
+            toast.success('Task Edited Successfully', {
+                position: 'top-right',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true
+            })
         } else {
             const newTask = {id: uuidv4(), text: item.taskText, isDone: false, editMode: false};
             setTasks([...tasks, newTask]);
+            toast.success('Task Added Successfully', {
+                position: 'top-right',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true
+            })
         }
     }
 
